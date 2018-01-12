@@ -19,7 +19,7 @@ train['Embarked']= train['Embarked'].replace(['C','Q','S'],[0,1,2])
 #dropping the columns(you can try using other columns as well)
 train.drop(['Name','Ticket','Cabin'] , axis =1 , inplace=True)
 
-#we dont need passengerId and survived column in our independent variables so we are ignoring them
+#we dont need passengerId and survived column in our independent variables so we are ignoring  them
 X       = train.iloc[:,2:7].values
 
 #using dependent variable survived
