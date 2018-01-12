@@ -34,7 +34,7 @@ test['Embarked']= test['Embarked'].replace(['C','Q','S'],[0,1,2])
 
 test.drop(['Name','Ticket','Cabin'] , axis =1 , inplace=True)
 
-#We dont need passengerId column in our independent variables so we are ignoring it
+# We dont need passengerId column in our independent variables so we are ignoring it
 test    = test.iloc[:,1:6].values
 
 #lets insert missing values in Age column with median by using Imputer
