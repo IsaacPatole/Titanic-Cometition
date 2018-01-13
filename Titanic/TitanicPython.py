@@ -64,7 +64,7 @@ X_test = sc_Xtest.fit_transform(X_test)
 sc_test = StandardScaler()
 test = sc_test.fit_transform(test)
 
-
+#Use any one of the classifier and check the results
 # Fitting XGBoost to the Training set
 from xgboost import XGBClassifier
 classifier = XGBClassifier(learning_rate=0.05,
@@ -79,6 +79,19 @@ classifier = XGBClassifier(learning_rate=0.05,
                            seed=1)
 
 classifier.fit(X_train, y_train)
+
+# Fitting Gradient boosting classifier
+from sklearn.ensemble import GradientBoostingClassifier
+classifier = GradientBoostingClassifier(max_depth=3,
+                                        learning_rate=0.025,
+                                        n_estimators=400, 
+                                        subsample=0.2,
+                                        min_samples_leaf=8,
+                                        verbose=True,
+                                      ).fit(X_train,y_train)
+
+
+print(classifier.score(X_test, y_test))
 
 # Predicting the Test set results
 y_pred = classifier.predict(X_test)
@@ -113,17 +126,5 @@ Result = pd.DataFrame({'PassengerId':Passengerid, 'Survived':y_result})
 
 Result.to_csv(r'C:\Users\MY\Desktop\Titanic\result.csv', index = False)
 
-
-# Now let's insert result into result.csv file by using dictionary(Key, Value pair) 
-y_result = classifier.predict(test)
-Passengerid = []
-for i in range(892,1310):
-    Passengerid.append(i)
-    
-Passengerid
-
-Result = pd.DataFrame({'PassengerId':Passengerid, 'Survived':y_result})
-
-Result.to_csv(r'C:\Users\MY\Desktop\Titanic\result.csv', index = False)
 
 
