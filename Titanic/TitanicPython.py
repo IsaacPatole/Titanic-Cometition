@@ -24,7 +24,7 @@ train['Embarked']= train['Embarked'].replace(['C','Q','S'],[0,1,2])
 
 
 
-#we dont need passengerId and survived column in our independent variables so we are ignoring them
+#we dont need survived column in our independent variables so we are not including it.
 X       = train.iloc[:,1:7].values
 
 #using dependent variable survived
