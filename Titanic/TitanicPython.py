@@ -1,13 +1,19 @@
-
-
 #importing the libraries
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-# let's read the dataset
+# let's read the daatset
 train   = pd.read_csv(r"C:\Users\MY\Desktop\Titanic\train.csv")
+
+#let's add parch and sibsp column to know if the passenger is travelling alone or not
+train['Family']= train.iloc[:, 6:8].sum(axis=1)
+train['Family'].loc[train['Family'] > 0] = 1
+train['Family'].loc[train['Family'] == 0] = 0
 train.describe()
+#dropping the columns(you can try using other columns as well)
+train.drop(['PassengerId','Name','SibSp','Parch','Ticket','Cabin'] , axis =1 , inplace=True)
+
 #fill Nan Values by using 'ffill'.  which fill's NaN values by its previouse value
 train['Embarked'] = train[['Embarked']].fillna(method='ffill')
 train['Fare'] = train[['Fare']].fillna(method='ffill')
@@ -16,26 +22,32 @@ train['Fare'] = train[['Fare']].fillna(method='ffill')
 train['Sex']= train[['Sex']].replace(['male','female'],[0,1])
 train['Embarked']= train['Embarked'].replace(['C','Q','S'],[0,1,2])
 
-#dropping the columns(you can try using other columns as well)
-train.drop(['Name','Ticket','Cabin'] , axis =1 , inplace=True)
 
-#we dont need passengerId and survived column in our independent variables so we are ignoring  them
-X       = train.iloc[:,2:7].values
+
+#we dont need passengerId and survived column in our independent variables so we are ignoring them
+X       = train.iloc[:,1:7].values
 
 #using dependent variable survived
-y       = train.iloc[:,1].values
+y       = train.iloc[:,0].values
 
 #let's do the same thing for preprocessing of test set
 test    = pd.read_csv(r"C:\Users\MY\Desktop\Titanic\test.csv")
+test['Family'] = test.iloc[:, 5:7].sum(axis=1) 
+test['Family'].loc[test['Family'] > 0] = 1
+test['Family'].loc[test['Family'] == 0] = 0
+
+test.drop(['PassengerId','Name','SibSp','Parch','Ticket','Cabin'] , axis =1 , inplace=True)
+
 test['Embarked'] = test[['Embarked']].fillna(method='ffill')
 test['Fare'] = test[['Fare']].fillna(method='ffill')
+
 test['Sex']= test[['Sex']].replace(['male','female'],[0,1])
 test['Embarked']= test['Embarked'].replace(['C','Q','S'],[0,1,2])
 
-test.drop(['Name','Ticket','Cabin'] , axis =1 , inplace=True)
 
-# We dont need passengerId column in our independent variables so we are ignoring it
-test    = test.iloc[:,1:6].values
+
+#We dont need passengerId column in our independent variables so we are ignoring it
+test    = test.iloc[:,0:6].values
 
 #lets insert missing values in Age column with median by using Imputer
 from sklearn.preprocessing import Imputer
