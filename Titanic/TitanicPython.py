@@ -141,6 +141,12 @@ classifier = XGBClassifier(learning_rate=0.05,
 classifier.fit(X_train, y_train)
 print(classifier.score(X_test, y_test))
 
+#K-Folds cross validation(can apply for each of the classifier)
+from sklearn.model_selection import cross_val_score
+accuracies = cross_val_score(estimator = classifier, X = X_train, y = y_train, cv = 10)
+accuracies.mean()
+accuracies.std()
+
 # Using Grid Search to tune parameters of our classifiers
 from sklearn.model_selection import GridSearchCV
 parameters = [{}]
@@ -152,7 +158,6 @@ grid_search = GridSearchCV(estimator = classifier,
 grid_search = grid_search.fit(X_train, y_train)
 best_accuracy = grid_search.best_score_
 best_parameters = grid_search.best_params_
-
 
 
 
