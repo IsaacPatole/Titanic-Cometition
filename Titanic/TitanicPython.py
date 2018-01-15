@@ -35,7 +35,7 @@ for df in df_data:
     df.groupby('Title').Age.mean()
 #using the same thing again to see the count+mean
     df.groupby('Title').Age.agg(['count','mean'])
-#lets fill missing na values in a Age column corresponding to average of each based on each title
+#lets fill missing na values in a Age columnby average Age corresponding to each title
 
 
     
