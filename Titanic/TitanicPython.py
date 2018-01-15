@@ -104,8 +104,6 @@ test = sc_test.fit_transform(test)
 from sklearn.tree import DecisionTreeClassifier
 classifier = DecisionTreeClassifier(criterion = 'entropy', random_state = 0)
 classifier.fit(X_train, y_train)
-# Predicting the Test set results
-y_pred = classifier.predict(X_test)
 print(classifier.score(X_test,y_test))
 
 # Fitting Random Forest Classification to the Training set
@@ -125,7 +123,7 @@ classifier = GradientBoostingClassifier(max_depth=3,
                                       ).fit(X_train,y_train)
 
 
-print(classifier.score(y_test,y_pred))
+print(classifier.score(X_test,y_test))
 
 # Fitting XGBoost Classification to the Training set
 from xgboost import XGBClassifier
