@@ -40,7 +40,7 @@ for df in df_data:
 
     
     
-print("What titles survived?")
+print("Which titles survived?")
 print(train[['Title', 'Survived']].groupby(['Title'], as_index=False).mean())
 
 title_mapping = {"Mr": 1, "Miss": 2, "Mrs": 3, "Master": 4, "Rare": 5, "Missing": 0}
