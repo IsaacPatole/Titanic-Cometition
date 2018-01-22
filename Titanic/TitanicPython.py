@@ -35,8 +35,13 @@ for df in df_data:
     df.groupby('Title').Age.mean()
 #using the same thing again to see the count+mean
     df.groupby('Title').Age.agg(['count','mean'])
+#lets fill missing na values in a Age column corresponding to median of each based on each title
+#inputing the values on Age Na's
+    df.loc[df.Age.isnull(), 'Age'] = df.groupby(['Title']).Age.transform('median')
 
+    df["Age"].isnull().sum()
     
+
 print("What titles survived?")
 print(train[['Title', 'Survived']].groupby(['Title'], as_index=False).mean())
 
@@ -70,19 +75,6 @@ y       = train.iloc[:,0].values
 
 #We dont need passengerId column in our independent variables so we are ignoring it
 test    = test.iloc[:,0:7].values
-
-#lets insert missing values in Age column with median by using Imputer
-from sklearn.preprocessing import Imputer
-imputer = Imputer(missing_values = 'NaN', strategy = 'median', axis = 0)
-#train set
-imputer = imputer.fit(X[:, 2:3])
-X[:, 2:3] = imputer.transform(X[:, 2:3])
-#test set for final result
-imputer2 = imputer.fit(test[:,2:3 ])
-test[:,2:3 ] = imputer2.transform(test[:, 2:3])
-
-
-
 
 # Splitting the dataset into the Training set and Test set 20% into test set and 80% into training set
 from sklearn.model_selection import train_test_split
