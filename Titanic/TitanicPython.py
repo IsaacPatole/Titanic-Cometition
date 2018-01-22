@@ -25,7 +25,8 @@ print(train[['Family', 'Survived']].groupby(['Family'], as_index=False).mean())
 for df in df_data:
     df['Embarked'] = df[['Embarked']].fillna(method='ffill')
     df['Fare'] = df[['Fare']].fillna(method='ffill')
-
+    
+#extracting titles from name column
 dataset_title = [i.split(",")[1].split(".")[0].strip() for i in test["Name"]]
 for df in df_data:
     df["Title"] = pd.Series(dataset_title)
@@ -151,6 +152,7 @@ y_pred = classifier.predict(X_test)
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
 
+# Fitting KNeighbors Classification to the Training set
 from sklearn.neighbors import KNeighborsClassifier
 classifier = KNeighborsClassifier(algorithm='auto', leaf_size=26, metric='minkowski', 
                            metric_params=None, n_jobs=1, n_neighbors=6, p=2, 
